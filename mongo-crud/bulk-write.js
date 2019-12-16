@@ -1,10 +1,16 @@
-// const r = await col.bulkWrite([
-//     { insertOne: { document: { a: 1 } } },
-//     { updateOne: { filter: { a: 2 }, update: { $set: { a: 2 } }, upsert: true } },
-//     { updateMany: { filter: { a: 2 }, update: { $set: { a: 2 } }, upsert: true } },
-//     { deleteOne: { filter: { c: 1 } } },
-//     { deleteMany: { filter: { c: 1 } } },
-//     { replaceOne: { filter: { c: 3 }, replacement: { c: 4 }, upsert: true } }
-// ],
-//     { ordered: true, w: 1 }
-// );
+const mongoClient = require('./client');
+const { database } = require('../settings/mongodb-access')
+
+module.exports = async (collectionName, arrayOfQueryObject, databaseName = database) => {
+    let client = await mongoClient(databaseName);
+    try {
+        const db = client.db(databaseName);
+        const collection = db.collection(collectionName);
+
+        return await collection.bulkWrite(arrayOfQueryObject, { ordered: true, w: 1 });
+    } catch (err) {
+        console.error('(error) bulk-write.js', err);
+    } finally {
+        client.close();
+    }
+}

@@ -1,4 +1,4 @@
-const mongoClient = require('./database');
+const mongoClient = require('./client');
 const { database } = require('../settings/mongodb-access')
 
 module.exports = async (collectionName, dataObject, databaseName = database) => {
@@ -6,7 +6,8 @@ module.exports = async (collectionName, dataObject, databaseName = database) => 
     try {
         const db = client.db(databaseName);
         const result = await db.collection(collectionName).insertOne(dataObject);
-        return result.insertedCount;
+
+        return result.insertedId;
     } catch (err) {
         console.error('(error) insert-one.js', err);
     } finally {
