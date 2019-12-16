@@ -1,0 +1,21 @@
+{
+  "name": "node-data-access",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "12.13.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Native MongoDB Driver",
+    "Async / Await"
+  ],
+  "author": "Sander Hammelburg",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "3.4.0"
+  }
+}
